@@ -10,6 +10,6 @@ jobs:
         runs-on: ubuntu-latest        
         steps:
             - name: Checkout repository
-              uses: RCFixer/hexlet-my-first-workflow@main
+              uses: actions/checkout@v4
             - name: Run make say-hello
               run: make say-hello
