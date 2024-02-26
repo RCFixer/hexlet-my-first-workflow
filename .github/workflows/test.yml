@@ -1,0 +1,32 @@
+name: Test model
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to use'
+        required: true
+        default: 'main'
+      release_tag:
+        description: 'Release or Tag to use for model.zip'
+        required: true
+
+jobs:
+  prepare-and-run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - name: Setup GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+      - name: Download and Unpack model.zip
+        run: |
+          gh release download ${{ github.event.inputs.release_tag }} --pattern 'model.zip'
+          unzip model.zip
+      - name: Fetch test.json and run tests
+        run: |
+          python ./run-test.py
