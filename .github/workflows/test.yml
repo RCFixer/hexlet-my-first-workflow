@@ -19,10 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
-      - name: Download and Unpack model.zip
-        run: |
-          gh release download ${{ github.event.inputs.release_tag }} --pattern 'model.zip'
-          unzip model.zip
       - name: Use the environment variable
         run: |
           echo "Значение переменной окружения release: ${{ github.event.inputs.release_tag }}"
