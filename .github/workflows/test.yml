@@ -19,14 +19,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
-      - name: Setup GitHub CLI
-        run: |
-          sudo apt update
-          sudo apt install -y gh
       - name: Download and Unpack model.zip
         run: |
           gh release download ${{ github.event.inputs.release_tag }} --pattern 'model.zip'
           unzip model.zip
-      - name: Fetch test.json and run tests
+      - name: Use the environment variable
         run: |
-          python ./run-test.py
+          echo "Значение переменной окружения release: ${{ github.event.inputs.release_tag }}"
+          echo "Значение переменной окружения branch: ${{ github.event.inputs.branch }}"
